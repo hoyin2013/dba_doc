@@ -27,11 +27,42 @@ pt-online-schema-change是percona公司开发的一个工具，在percona-toolki
     yum install perl-IO-Socket-SSL
 
 ## pt-online-schema-change使用
+    # 查看帮助
+    pt-online-schema-change --help
+
+## 主要参数说明
+- h 服务器
+- P 数据库端口
+- u 数据库用户
+- p 数据库密码
+- D 数据库名称
+- t 表名称
+- S socket
+- --alter ddl语句部分
+- --charset= 字符集
+- dry-run 测试
+- execute 执行
+
+## 用法举例
+    # 测试
+    pt-online-schema-change --charset=utf8mb4  h=localhost,P=3306,u=root,p='',D=db1,t=t1,S='mysql.sock' --alter "ADD COLUMN REGISTERED_ADDRESS VARCHAR(128) NULL DEFAULT NULL COMMENT '注册地址' AFTER OPERATE_CHINESE_NAME" --dry-run
+    # 运行
+    pt-online-schema-change --charset=utf8mb4 h=localhost,P=3306,u=root,p='',D=db1,t=t1,S='mysql.sock'  --alter "ADD COLUMN REGISTERED_ADDRESS VARCHAR(128) NULL DEFAULT NULL COMMENT '注册地址' AFTER OPERATE_CHINESE_NAME" --execute
 
 
+## 脚本实现举例
+    #!/bin/bash
 
+    cnn_host='127.0.0.1'
+    cnn_user='user'
+    cnn_pwd='password'
+    cnn_socket='socket'
+    cnn_db='database_name'
+    cnn_table='table_name'
+    
+    alter='ADD COLUMN REGISTERED_ADDRESS VARCHAR(128)'
 
-
+    pt-online-schema-change --charset=utf8mb4 h=${cnn_host},P=3306,u=${cnn_user},p=${cnn_pwd},D=${cnn_db},t=${cnn_table},S=${cnn_socket} --alter "${alter}" --execute
 
 
 
