@@ -65,7 +65,40 @@ pt-online-schema-change是percona公司开发的一个工具，在percona-toolki
     pt-online-schema-change --charset=utf8mb4 h=${cnn_host},P=3306,u=${cnn_user},p=${cnn_pwd},D=${cnn_db},t=${cnn_table},S=${cnn_socket} --alter "${alter}" --execute
 
 
+## 添加表字段 如添加表字段SQL语句为:
 
+`ALTER TABLE `tb_test` ADD COLUMN `column1` tinyint(4) DEFAULT NULL;`
+ 
+## 那么使用pt-online-schema-change则可以这样写
+
+`sh pt.sh tb_test "ADD COLUMN column1 tinyint(4) DEFAULT NULL"`
+ 
+
+ ## 修改表字段 SQL语句：
+
+`ALTER TABLE `tb_test` MODIFY COLUMN `num` int(11) unsigned NOT NULL DEFAULT '0';`
+ 
+
+## pt-online-schema-change工具
+
+`sh pt.sh tb_test "MODIFY COLUMN num int(11) unsigned NOT NULL DEFAULT '0'"`
+ 
+
+## 修改表字段名 SQL语句 
+
+`ALTER TABLE `tb_test` CHANGE COLUMN age adress varchar(30);`
+
+## pt-online-schema-change工具
+
+`sh pt.sh tb_test "CHANGE COLUMN age address varchar(30)"`
+ 
+## 添加索引 SQL语句 
+
+`ALTER TABLE `tb_test` ADD INDEX idx_address(address);`
+ 
+## pt-online-schema-change工具 
+
+`sh pt.sh tb_test "ADD INDEX idx_address(address)"`
 
 
 
